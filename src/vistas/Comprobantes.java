@@ -47,7 +47,9 @@ public class Comprobantes extends javax.swing.JPanel {
             }
             tablaComprobantes.setModel(modelo);
 
-            // Ajustar la ultima columna al tamaño del contenido
+            // Ajustar la PRIMERA Y ULTIMA columna al tamaño del contenido
+             packColumn(tablaComprobantes, 0);
+              packColumn(tablaComprobantes, 1);
             packColumn(tablaComprobantes, 5);
 
         } catch (Exception e) {

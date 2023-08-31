@@ -60,7 +60,7 @@ public class ComprobanteDAOImpl extends DataBase implements ComprobanteDAO{
 
     @Override
     public List<Comprobante> listar(String matricula) throws Exception {
-        String sql = "SELECT * FROM comprobante WHERE matriculaAlumno = ?";
+        String sql = "SELECT * FROM comprobante WHERE matriculaAlumno = ? ORDER BY idComprobante DESC";
         List<Comprobante> lista = null;
         try {
             this.conectar();

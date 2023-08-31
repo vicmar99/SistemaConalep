@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 
 import javax.swing.table.DefaultTableModel;
 import model.Comprobante;
-import sistemaconalep.ComprobanteDAOImpl;
+import controller.ComprobanteDAOImpl;
 
 /**
  *

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Usuario;
 import static sistemaconalep.Dashboard.labelDepartamento;
-import sistemaconalep.UsuarioDAOImpl;
+import controller.UsuarioDAOImpl;
 
 /**
  *

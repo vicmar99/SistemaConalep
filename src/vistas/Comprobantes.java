@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import model.Comprobante;
-import sistemaconalep.ComprobanteDAOImpl;
+import controller.ComprobanteDAOImpl;
 
 /**
  *
@@ -48,8 +48,7 @@ public class Comprobantes extends javax.swing.JPanel {
             tablaComprobantes.setModel(modelo);
 
             // Ajustar la ultima columna al tamaño del contenido
-            
-                packColumn(tablaComprobantes, 5);
+            packColumn(tablaComprobantes, 5);
 
         } catch (Exception e) {
             e.printStackTrace();

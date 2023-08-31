@@ -13,11 +13,11 @@ import model.AlumnoPeriodo;
 import model.Grupo;
 import model.Periodo;
 import model.Semestre;
-import sistemaconalep.AlumnoPeriodoDAOImpl;
+import controller.AlumnoPeriodoDAOImpl;
 import sistemaconalep.Dashboard;
-import sistemaconalep.GrupoDAOImpl;
-import sistemaconalep.PeriodoDAOImpl;
-import sistemaconalep.SemestreDAOImpl;
+import controller.GrupoDAOImpl;
+import controller.PeriodoDAOImpl;
+import controller.SemestreDAOImpl;
 import static vistas.PeriodoEscolar.boxSelectPeriodoEscolar;
 
 /**

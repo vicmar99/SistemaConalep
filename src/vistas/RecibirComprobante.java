@@ -27,14 +27,14 @@ import model.Comprobante;
 import model.Grupo;
 import model.Periodo;
 import model.Semestre;
-import sistemaconalep.AlumnoDAOImpl;
-import sistemaconalep.AlumnoPeriodoDAOImpl;
-import sistemaconalep.ComprobanteDAOImpl;
+import controller.AlumnoDAOImpl;
+import controller.AlumnoPeriodoDAOImpl;
+import controller.ComprobanteDAOImpl;
 import sistemaconalep.Dashboard;
 import static sistemaconalep.Dashboard.labelDepartamento;
-import sistemaconalep.GrupoDAOImpl;
-import sistemaconalep.PeriodoDAOImpl;
-import sistemaconalep.SemestreDAOImpl;
+import controller.GrupoDAOImpl;
+import controller.PeriodoDAOImpl;
+import controller.SemestreDAOImpl;
 import static vistas.Principal.etiNombreUsuario;
 
 /**

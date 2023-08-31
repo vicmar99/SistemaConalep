@@ -4,6 +4,7 @@
  */
 package sistemaconalep;
 
+import controller.UsuarioDAOImpl;
 import interfaces.UsuarioDAO;
 import javax.swing.JOptionPane;
 import model.Usuario;

@@ -4,71 +4,36 @@
  */
 package vistas;
 
-import interfaces.AlumnoDAO;
-import interfaces.AlumnoPeriodoDAO;
 import interfaces.ComprobanteDAO;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.Document;
-import model.Alumno;
-import model.AlumnoPeriodo;
 import model.Comprobante;
-import model.Grupo;
-import model.Periodo;
-import model.Semestre;
-import controller.AlumnoDAOImpl;
-import controller.AlumnoPeriodoDAOImpl;
 import controller.ComprobanteDAOImpl;
 import sistemaconalep.Dashboard;
-import static sistemaconalep.Dashboard.labelDepartamento;
-import controller.GrupoDAOImpl;
-import controller.PeriodoDAOImpl;
-import controller.SemestreDAOImpl;
-import static vistas.Principal.etiNombreUsuario;
 
 /**
  *
  * @author Yair
  */
-public class RecibirComprobante extends javax.swing.JPanel {
+public class ModificarComprobante extends javax.swing.JPanel {
 
     String rutaArchivopdf = "";
+    public static String idComprobante = "";
+    public static String matriculaAlumno = "";
 
     /**
      * Creates new form RecibirComprobante
      */
-    public RecibirComprobante() {
+    public ModificarComprobante() {
         initComponents();
-        llenarcomboBox();
-    }
-    
-
-    //  Metodo para llenar todos los JComboBox
-    private void llenarcomboBox() {
-        try {
-            //Llenar el box periodo
-            DefaultComboBoxModel modeloPeriodo = new DefaultComboBoxModel();
-            List<Periodo> periodos = new PeriodoDAOImpl().listar();
-
-            for (Periodo periodo : periodos) {
-                modeloPeriodo.addElement(periodo.getIdPeriodo());
-            }
-            boxPeriodo.setModel(modeloPeriodo);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -83,11 +48,7 @@ public class RecibirComprobante extends javax.swing.JPanel {
         panelRecibirComp = new javax.swing.JPanel();
         etiRecibirComp = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtMatriculaAlumnoComprobante = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        boxPeriodo = new javax.swing.JComboBox<>();
         btnSeleccionarArchivoComprobante = new javax.swing.JButton();
         btnAceptarRecibirComprobante = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -95,28 +56,12 @@ public class RecibirComprobante extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
 
         etiRecibirComp.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        etiRecibirComp.setText("Recibir comprobante");
+        etiRecibirComp.setText("Modificar comprobante");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        jLabel2.setText("Matrícula del alumno");
-
-        txtMatriculaAlumnoComprobante.setBackground(new java.awt.Color(255, 255, 255));
-        txtMatriculaAlumnoComprobante.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtMatriculaAlumnoComprobante.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        txtMatriculaAlumnoComprobante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatriculaAlumnoComprobanteActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Periodo escolar");
-
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("Ingrese los conceptos de pago y su monto");
-
-        boxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        boxPeriodo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         btnSeleccionarArchivoComprobante.setBackground(new java.awt.Color(0, 126, 103));
         btnSeleccionarArchivoComprobante.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -161,51 +106,34 @@ public class RecibirComprobante extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAceptarRecibirComprobante)
-                        .addGap(160, 160, 160))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMatriculaAlumnoComprobante)
-                                    .addComponent(boxPeriodo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnSeleccionarArchivoComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSeleccionarArchivoComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(6, 6, 6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAceptarRecibirComprobante)
+                .addGap(138, 138, 138))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMatriculaAlumnoComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(boxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSeleccionarArchivoComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAceptarRecibirComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelRecibirCompLayout = new javax.swing.GroupLayout(panelRecibirComp);
@@ -215,7 +143,7 @@ public class RecibirComprobante extends javax.swing.JPanel {
             .addGroup(panelRecibirCompLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(etiRecibirComp)
-                .addContainerGap(727, Short.MAX_VALUE))
+                .addContainerGap(711, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRecibirCompLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,9 +154,9 @@ public class RecibirComprobante extends javax.swing.JPanel {
             .addGroup(panelRecibirCompLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(etiRecibirComp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -253,37 +181,18 @@ public class RecibirComprobante extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSeleccionarArchivoComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarArchivoComprobanteActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos PDF", "pdf");
-        fileChooser.setFileFilter(filter);
-        int option = fileChooser.showOpenDialog(null);
-        if (option == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            String fileName = selectedFile.getName();
-            rutaArchivopdf = fileChooser.getSelectedFile().getPath();
-            //textField.setText(fileName);
-            btnSeleccionarArchivoComprobante.setText(fileName);
-
-        }
-    }//GEN-LAST:event_btnSeleccionarArchivoComprobanteActionPerformed
-
     private void btnAceptarRecibirComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarRecibirComprobanteActionPerformed
         String rutaArchivo = rutaArchivopdf;
-        String matricula = txtMatriculaAlumnoComprobante.getText();
-        String periodo = String.valueOf(boxPeriodo.getSelectedItem());
-        String usuario = etiNombreUsuario.getText();
-        String departamento = labelDepartamento.getText();
         String conceptos = txtConceptos.getText();
 
-        if (conceptos.trim().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe agregar concepto y monto de pago", 
+        if (conceptos.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe agregar concepto y monto de pago",
                     "AVISO", JOptionPane.ERROR_MESSAGE);
             return;
         }
         // Verifica si se seleccionó un archivo
         if (rutaArchivo.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo PDF", 
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo PDF",
                     "AVISO", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -299,63 +208,55 @@ public class RecibirComprobante extends javax.swing.JPanel {
         }
 
         Comprobante comprobante = new Comprobante();
-        comprobante.setMatriculaAlumno(matricula.trim());
-        comprobante.setIdPeriodo(periodo);
-        comprobante.setUsuarioRecibe(usuario);
-        comprobante.setDepartamentoRecibe(departamento);
         comprobante.setConceptos(conceptos);
         comprobante.setComprobante(archivo);
-
-        AlumnoPeriodo alumnoPeriodo = new AlumnoPeriodo();
-        alumnoPeriodo.setMatricula(matricula);
-        alumnoPeriodo.setIdPeriodo(periodo);
+        comprobante.setIdComprobante(Integer.parseInt(idComprobante));
 
         ComprobanteDAO comprobanteDAO = new ComprobanteDAOImpl();
-        AlumnoPeriodoDAO alumnoPeriodoDAO = new AlumnoPeriodoDAOImpl();
-        AlumnoDAO alumnoDAO = new AlumnoDAOImpl();
         try {
-            Alumno alumno = alumnoDAO.traerUnAlumno(matricula);
-            if (alumno.getMatricula() == null) {
-                JOptionPane.showMessageDialog(null, "Matrícula inválida", "AVISO", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            comprobanteDAO.registrar(comprobante);
-            JOptionPane.showMessageDialog(null, "Operación exitosa", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
-
-            alumnoPeriodo.setEstatusEntrega1("Entregado");
-            alumnoPeriodo.setEstatusEntrega2("Entregado");
-            alumnoPeriodo.setEstatusEntrega3("Entregado");
-            alumnoPeriodoDAO.modificar1(alumnoPeriodo);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            comprobanteDAO.modificar(comprobante);
+            JOptionPane.showMessageDialog(null, "Operación exitosa", "AVISO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            
+            Comprobantes.matricula = matriculaAlumno;
+            
+            Comprobantes c = new Comprobantes();
+            Dashboard.showView(c);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(ModificarComprobante.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        llenarcomboBox();
-        btnSeleccionarArchivoComprobante.setText("Seleccionar archivo...");
-        txtMatriculaAlumnoComprobante.setText("");
-        txtConceptos.setText("");
-        rutaArchivopdf = "";
+
     }//GEN-LAST:event_btnAceptarRecibirComprobanteActionPerformed
 
-    private void txtMatriculaAlumnoComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaAlumnoComprobanteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatriculaAlumnoComprobanteActionPerformed
+    private void btnSeleccionarArchivoComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarArchivoComprobanteActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos PDF", "pdf");
+        fileChooser.setFileFilter(filter);
+        int option = fileChooser.showOpenDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            String fileName = selectedFile.getName();
+            rutaArchivopdf = fileChooser.getSelectedFile().getPath();
+            //textField.setText(fileName);
+            btnSeleccionarArchivoComprobante.setText(fileName);
+
+        }
+    }//GEN-LAST:event_btnSeleccionarArchivoComprobanteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> boxPeriodo;
     private javax.swing.JButton btnAceptarRecibirComprobante;
     private javax.swing.JButton btnSeleccionarArchivoComprobante;
     private javax.swing.JLabel etiRecibirComp;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panelRecibirComp;
     private javax.swing.JTextArea txtConceptos;
-    private javax.swing.JTextField txtMatriculaAlumnoComprobante;
     // End of variables declaration//GEN-END:variables
 }

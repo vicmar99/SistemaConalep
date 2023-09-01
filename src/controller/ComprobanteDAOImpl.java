@@ -21,7 +21,7 @@ import model.Comprobante;
  *
  * @author Yair
  */
-public class ComprobanteDAOImpl extends DataBase implements ComprobanteDAO{
+public class ComprobanteDAOImpl extends DataBase implements ComprobanteDAO {
 
     @Override
     public void registrar(Comprobante comprobante) throws Exception {
@@ -50,7 +50,20 @@ public class ComprobanteDAOImpl extends DataBase implements ComprobanteDAO{
 
     @Override
     public void modificar(Comprobante comprobante) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE comprobante SET conceptos = ?, comprobante = ? WHERE idComprobante = ?";
+
+        this.conectar();
+        try (PreparedStatement st = this.conexion.prepareStatement(sql)) {
+            st.setString(1, comprobante.getConceptos());
+            st.setBytes(2, comprobante.getComprobante());
+            st.setInt(3, comprobante.getIdComprobante());
+
+            st.executeUpdate();
+            st.close();
+        } finally {
+            cerrarConexion();
+        }
+
     }
 
     @Override
@@ -108,7 +121,7 @@ public class ComprobanteDAOImpl extends DataBase implements ComprobanteDAO{
 
             if (rs.next()) {
                 b = rs.getBytes("comprobante");
-                
+
                 // Crear un archivo temporal para almacenar los datos binarios del PDF
                 File tempFile = File.createTempFile("comprobante", ".pdf");
                 FileOutputStream fos = new FileOutputStream(tempFile);

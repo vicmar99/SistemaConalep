@@ -109,10 +109,12 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                       <Component id="btnAceptarRecibirComprobante" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnAceptarRecibirComprobante1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -128,7 +130,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnSeleccionarArchivoComprobante" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnAceptarRecibirComprobante" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnAceptarRecibirComprobante" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                          <Component id="btnAceptarRecibirComprobante1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace pref="33" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -220,6 +225,34 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="**Concepto de pago $Monto**"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnAceptarRecibirComprobante1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="67" green="7e" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Cancelar"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                    <MatteColorBorder bottom="1" left="10" right="10" top="1"/>
+                  </Border>
+                </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor de Mano"/>
+                </Property>
+                <Property name="focusPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAceptarRecibirComprobante1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

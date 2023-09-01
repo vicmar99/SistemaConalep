@@ -54,6 +54,7 @@ public class ModificarComprobante extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtConceptos = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
+        btnAceptarRecibirComprobante1 = new javax.swing.JButton();
 
         etiRecibirComp.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         etiRecibirComp.setText("Modificar comprobante");
@@ -99,6 +100,21 @@ public class ModificarComprobante extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
         jLabel5.setText("**Concepto de pago $Monto**");
 
+        btnAceptarRecibirComprobante1.setBackground(new java.awt.Color(0, 126, 103));
+        btnAceptarRecibirComprobante1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnAceptarRecibirComprobante1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAceptarRecibirComprobante1.setText("Cancelar");
+        btnAceptarRecibirComprobante1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 10, new java.awt.Color(0, 0, 0)));
+        btnAceptarRecibirComprobante1.setBorderPainted(false);
+        btnAceptarRecibirComprobante1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAceptarRecibirComprobante1.setFocusPainted(false);
+        btnAceptarRecibirComprobante1.setFocusable(false);
+        btnAceptarRecibirComprobante1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarRecibirComprobante1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,10 +131,12 @@ public class ModificarComprobante extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(95, 95, 95)
                 .addComponent(btnAceptarRecibirComprobante)
-                .addGap(138, 138, 138))
+                .addGap(18, 18, 18)
+                .addComponent(btnAceptarRecibirComprobante1)
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +150,9 @@ public class ModificarComprobante extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(btnSeleccionarArchivoComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnAceptarRecibirComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptarRecibirComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptarRecibirComprobante1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -216,16 +236,16 @@ public class ModificarComprobante extends javax.swing.JPanel {
         try {
             comprobanteDAO.modificar(comprobante);
             JOptionPane.showMessageDialog(null, "Operación exitosa", "AVISO",
-                        JOptionPane.INFORMATION_MESSAGE);
-            
+                    JOptionPane.INFORMATION_MESSAGE);
+
             Comprobantes.matricula = matriculaAlumno;
-            
+
             Comprobantes c = new Comprobantes();
             Dashboard.showView(c);
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error", "ERROR",
-                        JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ModificarComprobante.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -247,9 +267,17 @@ public class ModificarComprobante extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSeleccionarArchivoComprobanteActionPerformed
 
+    private void btnAceptarRecibirComprobante1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarRecibirComprobante1ActionPerformed
+        Comprobantes.matricula = matriculaAlumno;
+
+        Comprobantes c = new Comprobantes();
+        Dashboard.showView(c);
+    }//GEN-LAST:event_btnAceptarRecibirComprobante1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptarRecibirComprobante;
+    private javax.swing.JButton btnAceptarRecibirComprobante1;
     private javax.swing.JButton btnSeleccionarArchivoComprobante;
     private javax.swing.JLabel etiRecibirComp;
     private javax.swing.JLabel jLabel5;

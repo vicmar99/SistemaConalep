@@ -59,8 +59,21 @@ public class AlumnoPeriodoDAOImpl extends DataBase implements AlumnoPeriodoDAO{
     }
 
     @Override
-    public void eliminar(AlumnoPeriodo reportePago) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminar(AlumnoPeriodo alumnoPeriodo) throws Exception {
+        String sql = "DELETE FROM alumnoPeriodo WHERE idPeriodo = ? AND matriculaAlumno = ?";
+        try {
+            this.conectar();
+            PreparedStatement st = this.conexion.prepareStatement(sql);
+            st.setString(1, alumnoPeriodo.getIdPeriodo());
+            st.setString(2, alumnoPeriodo.getMatricula());
+
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrarConexion();
+        }
     }
 
     @Override
@@ -341,5 +354,7 @@ public class AlumnoPeriodoDAOImpl extends DataBase implements AlumnoPeriodoDAO{
             this.cerrarConexion();
         }
     }
+
+   
 
 }

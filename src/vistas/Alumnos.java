@@ -119,7 +119,7 @@ public class Alumnos extends javax.swing.JPanel {
                     String.valueOf(alumno.getSemestre()), alumno.getGrupo()};
                 modelo.addRow(renglon);
             }
-           
+
             tablaAlumnos.setModel(modelo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -571,18 +571,28 @@ public class Alumnos extends javax.swing.JPanel {
 
     private void btnEliminarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAlumnoActionPerformed
         int fila = tablaAlumnos.getSelectedRow();
+
         if (fila == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación", "AVISO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una registro para realizar la operación", "AVISO", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int respuesta = JOptionPane.showConfirmDialog(null, "Los registro seleccionados se eliminarán de forma definitiva\n¿Desea continuar?",
+        
+        int respuesta = JOptionPane.showConfirmDialog(null, "Los alumnos seleccionados se eliminarán de forma definitiva\n¿Desea continuar?",
                 "Confirmar eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (respuesta == JOptionPane.YES_OPTION) {
-            AlumnoDAO alumnoDAO = new AlumnoDAOImpl();
+            
+            AlumnoPeriodo alumno = new AlumnoPeriodo();
+            AlumnoPeriodoDAO ap = new AlumnoPeriodoDAOImpl();
+            
             for (int i : tablaAlumnos.getSelectedRows()) {
+                
+                alumno.setIdPeriodo(String.valueOf(tablaAlumnos.getValueAt(i, 0)));
+                alumno.setMatricula(String.valueOf(tablaAlumnos.getValueAt(i, 1)));
+                
                 try {
-                    alumnoDAO.eliminar(String.valueOf(tablaAlumnos.getValueAt(i, 1)));
+                    ap.eliminar(alumno);
                 } catch (Exception e) {
+                   JOptionPane.showMessageDialog(null, "Ocurrió un error al realizar la opeación", "ERROR", JOptionPane.ERROR_MESSAGE);
                     e.printStackTrace();
                 }
             }

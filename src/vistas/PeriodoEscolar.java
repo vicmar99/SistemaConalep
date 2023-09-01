@@ -527,40 +527,37 @@ public class PeriodoEscolar extends javax.swing.JPanel {
     private void btnAceptarCargarListaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarCargarListaAlumnosActionPerformed
         String rutaArchivo = rutaArchivoExcel;
 
-        if (rutaArchivo.equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un archivo de Excel ",
-                    "AVISO", JOptionPane.ERROR_MESSAGE);
+        if (rutaArchivo.isEmpty()) {
+            mostrarError("Debe seleccionar un archivo de Excel");
             return;
         }
 
         List<Alumno> listaAlumnos = obtenerListaAlumnos(rutaArchivo);
+
+        if (listaAlumnos == null || listaAlumnos.isEmpty()) {
+            mostrarError("Error al cargar la lista de alumnos desde el archivo");
+            return;
+        }
+
         AlumnoDAO alumnoDAO = new AlumnoDAOImpl();
         AlumnoPeriodoDAO alumnoPeriodoDAO = new AlumnoPeriodoDAOImpl();
 
-        if (listaAlumnos == null) {
-            JOptionPane.showMessageDialog(null, "Error con el archivo seleccionado",
-                    "AVISO", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         try {
             alumnoDAO.registrarLista(listaAlumnos);
-            JOptionPane.showMessageDialog(null, "Operación exitosa",
-                    "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            mostrarMensaje("Operación exitosa", "Operación Exitosa");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             alumnoPeriodoDAO.registrarLista(listaAlumnos,
                     String.valueOf(boxSelectPeriodoEscolar.getSelectedItem()));
+
+            rellenarTablaPeriodos();
+            llenarcomboBox();
+            btnSeleccionarArchivo.setText("Seleccionar archivo...");
+            rutaArchivoExcel = "";
+
         } catch (Exception e) {
+            mostrarError("Error al realizar la operación");
             e.printStackTrace();
         }
-
-        rellenarTablaPeriodos();
-        llenarcomboBox();
-        btnSeleccionarArchivo.setText("Seleccionar archivo...");
-        rutaArchivoExcel = "";
     }//GEN-LAST:event_btnAceptarCargarListaAlumnosActionPerformed
 
     private void btnAceptarNuevoPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarNuevoPeriodoActionPerformed
@@ -636,7 +633,7 @@ public class PeriodoEscolar extends javax.swing.JPanel {
             } else {
                 Grupo grupo = new Grupo();
                 grupo.setIdGrupo(idGrupo);
-                
+
                 GrupoDAO dao = new GrupoDAOImpl();
                 dao.registrar(grupo);
                 JOptionPane.showMessageDialog(null, "Operación exitosa",
@@ -651,9 +648,16 @@ public class PeriodoEscolar extends javax.swing.JPanel {
 
         txtNuevoGrupo.setText("");
         rellenarTablaGrupos();
-        
+
     }//GEN-LAST:event_btnAceptarNGrupoActionPerformed
 
+    private void mostrarMensaje(String titulo, String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "AVISO", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JComboBox<String> boxSelectPeriodoEscolar;

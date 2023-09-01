@@ -31,6 +31,9 @@ import controller.AlumnoPeriodoDAOImpl;
 import controller.GrupoDAOImpl;
 import controller.PeriodoDAOImpl;
 import controller.SemestreDAOImpl;
+import interfaces.GrupoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,6 +49,7 @@ public class PeriodoEscolar extends javax.swing.JPanel {
     public PeriodoEscolar() {
         initComponents();
         rellenarTablaPeriodos();
+        rellenarTablaGrupos();
         llenarcomboBox();
     }
 
@@ -118,8 +122,10 @@ public class PeriodoEscolar extends javax.swing.JPanel {
 
     //Rellenar la tabla periodos
     private static void rellenarTablaPeriodos() {
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
         try {
-            DefaultTableModel modelo = new DefaultTableModel();
             List<Periodo> periodos = new PeriodoDAOImpl().listar();
 
             String[] columnas = {"Periodos"};
@@ -129,10 +135,35 @@ public class PeriodoEscolar extends javax.swing.JPanel {
                 String[] renglon = {periodo.getIdPeriodo()};
                 modelo.addRow(renglon);
             }
+
             tablaPeriodos.setModel(modelo);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //Rellenar tabla grupos
+    private static void rellenarTablaGrupos() {
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        try {
+            List<Grupo> grupos = new GrupoDAOImpl().listar();
+
+            String[] columnas = {"Grupos"};
+            modelo.setColumnIdentifiers(columnas);
+
+            for (Grupo grupo : grupos) {
+                String[] renglon = {grupo.getIdGrupo()};
+                modelo.addRow(renglon);
+            }
+
+            tablaGrupos.setModel(modelo);
+
+        } catch (Exception ex) {
+            Logger.getLogger(PeriodoEscolar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     //Llenar el box periodo
@@ -535,22 +566,41 @@ public class PeriodoEscolar extends javax.swing.JPanel {
     private void btnAceptarNuevoPeriodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarNuevoPeriodoActionPerformed
         String idPeriodo = txtNuevoPeriodo.getText();
 
-        Periodo periodo = new Periodo();
-        periodo.setIdPeriodo(idPeriodo);
-
         if (idPeriodo.trim().isEmpty()) {//Eliminar espacios y validar si está vacío o no
             JOptionPane.showMessageDialog(null, "Ingrese un periodo nuevo",
                     "AVISO", JOptionPane.WARNING_MESSAGE);
             return;//Si está vacío terminamos detenemos la ejecución
         }
+
         try {
-            PeriodoDAO dao = new PeriodoDAOImpl();
-            dao.registrar(periodo);
-            JOptionPane.showMessageDialog(null, "Operación exitosa",
-                    "AVISO", JOptionPane.INFORMATION_MESSAGE);
+            // Obtener la lista de periodos
+            List<Periodo> periodos = new PeriodoDAOImpl().listar();
+
+            // Validar si el periodo ya existe en la lista
+            boolean periodoExiste = false;
+            for (Periodo periodo : periodos) {
+                if (periodo.getIdPeriodo().equals(idPeriodo)) {
+                    periodoExiste = true;
+                    break; // Termina el bucle si se encuentra una coincidencia
+                }
+            }
+
+            if (periodoExiste) {
+                JOptionPane.showMessageDialog(null, "El periodo ya existe",
+                        "AVISO", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // Si el periodo no existe, realizar la operación de registro
+                Periodo periodo = new Periodo();
+                periodo.setIdPeriodo(idPeriodo);
+
+                PeriodoDAO dao = new PeriodoDAOImpl();
+                dao.registrar(periodo);
+                JOptionPane.showMessageDialog(null, "Operación exitosa",
+                        "AVISO", JOptionPane.INFORMATION_MESSAGE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Ocurrió un error al realizar la opeación",
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al realizar la operación",
                     "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -560,7 +610,48 @@ public class PeriodoEscolar extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAceptarNuevoPeriodoActionPerformed
 
     private void btnAceptarNGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarNGrupoActionPerformed
-        // TODO add your handling code here:
+        String idGrupo = txtNuevoGrupo.getText();
+
+        if (idGrupo.trim().isEmpty()) {//Eliminar espacios y validar si está vacío o no
+            JOptionPane.showMessageDialog(null, "Ingrese un grupo válido",
+                    "AVISO", JOptionPane.WARNING_MESSAGE);
+            return;//Si está vacío terminamos detenemos la ejecución
+        }
+
+        try {
+            //Obtener la lista de grupos
+            List<Grupo> grupos = new GrupoDAOImpl().listar();
+
+            boolean grupoExiste = false;
+            for (Grupo grupo : grupos) {
+                if (grupo.getIdGrupo().equals(idGrupo)) {
+                    grupoExiste = true;
+                    break;
+                }
+            }
+
+            if (grupoExiste) {
+                JOptionPane.showMessageDialog(null, "El grupo ya existe",
+                        "AVISO", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Grupo grupo = new Grupo();
+                grupo.setIdGrupo(idGrupo);
+                
+                GrupoDAO dao = new GrupoDAOImpl();
+                dao.registrar(grupo);
+                JOptionPane.showMessageDialog(null, "Operación exitosa",
+                        "AVISO", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al realizar la opeación",
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
+        txtNuevoGrupo.setText("");
+        rellenarTablaGrupos();
+        
     }//GEN-LAST:event_btnAceptarNGrupoActionPerformed
 
 

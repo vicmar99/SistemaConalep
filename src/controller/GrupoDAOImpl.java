@@ -16,11 +16,23 @@ import model.Grupo;
  *
  * @author Yair
  */
-public class GrupoDAOImpl extends DataBase implements GrupoDAO{
+public class GrupoDAOImpl extends DataBase implements GrupoDAO {
 
     @Override
     public void registrar(Grupo grupo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO grupo (idGrupo) VALUES (?)";
+      
+        try {
+            this.conectar();
+            PreparedStatement st = this.conexion.prepareStatement(sql);
+            st.setString(1, grupo.getIdGrupo());
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrarConexion();
+        }
     }
 
     @Override
@@ -52,12 +64,11 @@ public class GrupoDAOImpl extends DataBase implements GrupoDAO{
             st.close();
 
         } catch (Exception e) {
-             e.printStackTrace();
+            e.printStackTrace();
         } finally {
             this.cerrarConexion();
         }
         return lista;
     }
 
-    }
-   
+}

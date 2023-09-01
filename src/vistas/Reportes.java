@@ -14,11 +14,13 @@ import model.Grupo;
 import model.Periodo;
 import model.Semestre;
 import controller.AlumnoPeriodoDAOImpl;
+import controller.ComprobanteDAOImpl;
 import sistemaconalep.Dashboard;
 import controller.GrupoDAOImpl;
 import controller.PeriodoDAOImpl;
 import controller.SemestreDAOImpl;
-import static vistas.PeriodoEscolar.boxSelectPeriodoEscolar;
+import interfaces.ComprobanteDAO;
+import model.Comprobante;
 
 /**
  *
@@ -349,7 +351,7 @@ public class Reportes extends javax.swing.JPanel {
         try {
             AlumnoPeriodo alumnoPeriodo = alumnoPeridoDAO.traerUnAlumnoPeriodo(periodo, matricula);
             if (alumnoPeriodo.getMatricula() == null) {
-                JOptionPane.showMessageDialog(null, "Ingrese una matrícula válida", "AVISO", JOptionPane.ERROR_MESSAGE);
+                mostrarError("Ingrese una matrícula válida");
                 txtBuscarAlumnosPeriodo.setText("");
                 return;
             }
@@ -373,18 +375,43 @@ public class Reportes extends javax.swing.JPanel {
     }//GEN-LAST:event_boxReportesGrupoActionPerformed
 
     private void btnVerComprobantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerComprobantesActionPerformed
-        int fila = tablaReportes.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación", "AVISO", JOptionPane.ERROR_MESSAGE);
+        int filaSeleccionada = tablaReportes.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            mostrarError("Debe seleccionar al menos una fila para realizar la operación");
             return;
         }
 
-        Comprobantes.matricula = String.valueOf(tablaReportes.getValueAt(fila, 1));
+        String matricula = String.valueOf(tablaReportes.getValueAt(filaSeleccionada, 1));
+        Comprobantes.matricula = matricula;
 
-        Comprobantes c = new Comprobantes();
-        Dashboard.showView(c);
+        ComprobanteDAO comprobanteDAO = new ComprobanteDAOImpl();
+
+        try {
+            List<Comprobante> comprobantes = comprobanteDAO.listar(matricula);
+
+            if (!comprobantes.isEmpty()) {
+                Comprobantes comprobantesView = new Comprobantes();
+                Dashboard.showView(comprobantesView);
+            } else {
+                mostrarAdvertencia("No se han subido comprobantes del alumno");
+            }
+        } catch (Exception ex) {
+            mostrarError("Error al obtener los comprobantes");
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_btnVerComprobantesActionPerformed
 
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mostrarAdvertencia(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "AVISO", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "AVISO", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JComboBox<String> boxReportesGrupo;

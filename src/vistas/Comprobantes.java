@@ -38,7 +38,7 @@ public class Comprobantes extends javax.swing.JPanel {
             DefaultTableModel modelo = new DefaultTableModel();
             List<Comprobante> comprobantes = new ComprobanteDAOImpl().listar(matricula);
 
-            String[] columnas = {"ID", "Periodo", "Recibió", "Departamento", "Fecha", "Concepto y cantidad"};
+            String[] columnas = {"ID", "Periodo", "Recibió", "Departamento", "Fecha", "Concepto y monto"};
             modelo.setColumnIdentifiers(columnas);
 
             for (Comprobante comprobante : comprobantes) {
@@ -101,7 +101,7 @@ public class Comprobantes extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tablaComprobantes);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setText("Historial de comporbantes entregados");
+        jLabel1.setText("Historial de comprobantes entregados");
 
         etiAlumno.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         etiAlumno.setText("Matrícula");

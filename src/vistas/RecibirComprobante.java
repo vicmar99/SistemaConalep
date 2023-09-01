@@ -274,7 +274,7 @@ public class RecibirComprobante extends javax.swing.JPanel {
         String periodo = String.valueOf(boxPeriodo.getSelectedItem());
         String usuario = etiNombreUsuario.getText();
         String departamento = labelDepartamento.getText();
-        String conceptos = txtConceptos.getText();
+        String conceptos = txtConceptos.getText().trim().replace("\n", " "); // Reemplazar saltos de línea con punto y coma
 
         if (conceptos.trim().isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe agregar concepto y monto de pago", 

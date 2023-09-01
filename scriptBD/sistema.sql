@@ -100,9 +100,6 @@ create table comprobante(
 )
 go
 
-insert into grupo values('A'),('B'),('C'),('D')
-go
-
 insert into departamento values 
 ('Area de Recursos Administrativos'), 
 ('Servicios Escolares'), 
@@ -122,9 +119,6 @@ go
 CREATE VIEW VistaAlumnoPeriodo AS
 SELECT ap.idPeriodo,ap.matriculaAlumno, a.nombre, a.aPaterno, a.aMaterno,
 ap.semestre, ap.grupo, ap.estatus_entrega1, ap.estatus_entrega2,ap.estatus_entrega3
-
 FROM alumnoPeriodo ap
 JOIN alumno a ON ap.matriculaAlumno = a.matricula;
 go
-
-select * from usuario

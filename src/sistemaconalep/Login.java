@@ -8,6 +8,7 @@ import controller.UsuarioDAOImpl;
 import interfaces.UsuarioDAO;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import vistas.Comprobantes;
 
 /**
  *
@@ -48,13 +49,14 @@ public class Login extends javax.swing.JFrame {
 
             if (idUsuario.equals(idUsuariobd) && clave.equals(clavebd)) {
 
-                String nombreUsuario = usuario.getNombre() + " " + usuario.getApellidos();
-
-                Dashboard.setNombreUsuario(nombreUsuario);
+                String nombreUsuario = usuario.getNombre();
+                String apellidosUsuario = usuario.getApellidos();
+                
+                Dashboard.setNombreUsuario(nombreUsuario + " " + apellidosUsuario);
                 Dashboard d = new Dashboard();
 
                 d.setVisible(true);
-                d.labelDepartamento.setText(usuario.getDepartamento());
+                d.labelDepartamento.setText(departamento);
 
                 this.dispose();
 

@@ -14,13 +14,14 @@ import javax.swing.table.TableCellRenderer;
 import model.Comprobante;
 import controller.ComprobanteDAOImpl;
 import sistemaconalep.Dashboard;
+import static vistas.Principal.etiNombreUsuario;
 
 /**
  *
  * @author Yair
  */
 public class Comprobantes extends javax.swing.JPanel {
-
+    
     public static String matricula = "";
 
     /**
@@ -37,10 +38,10 @@ public class Comprobantes extends javax.swing.JPanel {
         try {
             DefaultTableModel modelo = new DefaultTableModel();
             List<Comprobante> comprobantes = new ComprobanteDAOImpl().listar(matricula);
-
+            
             String[] columnas = {"ID", "Periodo", "Recibió", "Departamento", "Fecha", "Concepto y monto"};
             modelo.setColumnIdentifiers(columnas);
-
+            
             for (Comprobante comprobante : comprobantes) {
                 String[] renglon = {String.valueOf(comprobante.getIdComprobante()), comprobante.getIdPeriodo(),
                     comprobante.getUsuarioRecibe(), comprobante.getDepartamentoRecibe(), comprobante.getFechaRecibido(), comprobante.getConceptos(),};
@@ -52,7 +53,7 @@ public class Comprobantes extends javax.swing.JPanel {
             packColumn(tablaComprobantes, 0);
             packColumn(tablaComprobantes, 1);
             packColumn(tablaComprobantes, 5);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -206,22 +207,22 @@ public class Comprobantes extends javax.swing.JPanel {
 
     private void btnVerComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerComprobanteActionPerformed
         int fila = tablaComprobantes.getSelectedRow();
-
+        
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación",
                     "AVISO", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         int idComprobante = Integer.parseInt(tablaComprobantes.getValueAt(fila, 0).toString());
-
+        
         ComprobanteDAO comprobanteDAO = new ComprobanteDAOImpl();
         comprobanteDAO.visualizarPdf(idComprobante);
     }//GEN-LAST:event_btnVerComprobanteActionPerformed
 
     private void btnModificarComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComprobanteActionPerformed
         int fila = tablaComprobantes.getSelectedRow();
-
+        
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación",
                     "AVISO", JOptionPane.ERROR_MESSAGE);
@@ -229,17 +230,25 @@ public class Comprobantes extends javax.swing.JPanel {
         }
         
         String idComprobante = tablaComprobantes.getValueAt(fila, 0).toString();
+        String nombreUsuario = tablaComprobantes.getValueAt(fila, 2).toString();
+        String departamento = tablaComprobantes.getValueAt(fila, 3).toString();
+        String departamentoSitio = Dashboard.labelDepartamento.getText();
         
-        ModificarComprobante.idComprobante = idComprobante;
-        ModificarComprobante.matriculaAlumno = matricula;
-        
-        ModificarComprobante mc = new ModificarComprobante();
-        Dashboard.showView(mc);
+        if (nombreUsuario.equals(etiNombreUsuario.getText()) && departamento.equals(departamentoSitio)) {
+            ModificarComprobante.idComprobante = idComprobante;
+            ModificarComprobante.matriculaAlumno = matricula;
+            
+            ModificarComprobante mc = new ModificarComprobante();
+            Dashboard.showView(mc);
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo el usuario que recibió puede modificar",
+                    "AVISO", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarComprobanteActionPerformed
 
     private void btnEliminarComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarComprobanteActionPerformed
         int fila = tablaComprobantes.getSelectedRow();
-
+        
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación",
                     "AVISO", JOptionPane.ERROR_MESSAGE);
@@ -248,8 +257,7 @@ public class Comprobantes extends javax.swing.JPanel {
         
         int idComprobante = Integer.parseInt(tablaComprobantes.getValueAt(fila, 0).toString());
         
-        
-        
+
     }//GEN-LAST:event_btnEliminarComprobanteActionPerformed
 
 

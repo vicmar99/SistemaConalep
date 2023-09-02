@@ -203,7 +203,7 @@ public class ModificarComprobante extends javax.swing.JPanel {
 
     private void btnAceptarRecibirComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarRecibirComprobanteActionPerformed
         String rutaArchivo = rutaArchivopdf;
-        String conceptos = txtConceptos.getText();
+        String conceptos = txtConceptos.getText().trim().replace("\n", " ");
 
         if (conceptos.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe agregar concepto y monto de pago",

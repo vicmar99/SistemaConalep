@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import controller.AlumnoPeriodoDAOImpl;
 import interfaces.ComprobanteDAO;
 import java.awt.Component;
 import java.util.List;
@@ -13,6 +14,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import model.Comprobante;
 import controller.ComprobanteDAOImpl;
+import interfaces.AlumnoPeriodoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.AlumnoPeriodo;
 import sistemaconalep.Dashboard;
 import static vistas.Principal.etiNombreUsuario;
 
@@ -225,7 +230,7 @@ public class Comprobantes extends javax.swing.JPanel {
         
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación",
-                    "AVISO", JOptionPane.ERROR_MESSAGE);
+                    "AVISO", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -242,8 +247,9 @@ public class Comprobantes extends javax.swing.JPanel {
             Dashboard.showView(mc);
         } else {
             JOptionPane.showMessageDialog(null, "Solo el usuario que recibió puede modificar",
-                    "AVISO", JOptionPane.ERROR_MESSAGE);
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        llenarTabla();
     }//GEN-LAST:event_btnModificarComprobanteActionPerformed
 
     private void btnEliminarComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarComprobanteActionPerformed
@@ -251,13 +257,51 @@ public class Comprobantes extends javax.swing.JPanel {
         
         if (fila == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación",
-                    "AVISO", JOptionPane.ERROR_MESSAGE);
+                    "AVISO", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         int idComprobante = Integer.parseInt(tablaComprobantes.getValueAt(fila, 0).toString());
+        String idPeriodo = tablaComprobantes.getValueAt(fila, 1).toString();
+        String nombreUsuario = tablaComprobantes.getValueAt(fila, 2).toString();
+        String departamento = tablaComprobantes.getValueAt(fila, 3).toString();
+        String departamentoSitio = Dashboard.labelDepartamento.getText();
         
-
+        if (nombreUsuario.equals(etiNombreUsuario.getText()) && departamento.equals(departamentoSitio)) {
+            int respuesta = JOptionPane.showConfirmDialog(null, "El archivo se eliminará de forma definitiva\n¿Desea continuar?",
+                    "ELIMINAR", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if (respuesta == JOptionPane.YES_OPTION) {
+                
+                Comprobante comprobante = new Comprobante();
+                comprobante.setIdComprobante(idComprobante);
+                AlumnoPeriodo alumnoPeriodo = new AlumnoPeriodo();
+                alumnoPeriodo.setEstatusEntrega1("No entregado");
+                alumnoPeriodo.setEstatusEntrega2("No entregado");
+                alumnoPeriodo.setEstatusEntrega3("No entregado");
+                alumnoPeriodo.setIdPeriodo(idPeriodo);
+                alumnoPeriodo.setMatricula(matricula);
+                
+                ComprobanteDAO comprobanteDAO = new ComprobanteDAOImpl();
+                AlumnoPeriodoDAO alumnoPeriodoDAO = new AlumnoPeriodoDAOImpl();
+                
+                try {
+                    comprobanteDAO.eliminar(comprobante);
+                    alumnoPeriodoDAO.modificar1(alumnoPeriodo);
+                    JOptionPane.showMessageDialog(null, "Operación exitosa",
+                            "AVISO", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    Logger.getLogger(Comprobantes.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Ocurrió un error",
+                            "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo el usuario que recibió puede modificar",
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        llenarTabla();
     }//GEN-LAST:event_btnEliminarComprobanteActionPerformed
 
 

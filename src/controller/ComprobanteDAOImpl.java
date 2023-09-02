@@ -68,7 +68,19 @@ public class ComprobanteDAOImpl extends DataBase implements ComprobanteDAO {
 
     @Override
     public void eliminar(Comprobante comprobante) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        String sql = "DELETE FROM comprobante WHERE idComprobante = ?";
+
+        this.conectar();
+
+        try (PreparedStatement st = this.conexion.prepareStatement(sql)) {
+            st.setInt(1, comprobante.getIdComprobante());
+
+            st.executeUpdate();
+
+        } finally {
+            this.cerrarConexion();
+        }
     }
 
     @Override

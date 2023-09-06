@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/vistas/Usuarios.java</file>
+            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/sistemaconalep/Login.java</file>
             <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/vistas/Comprobantes.java</file>
-            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/controller/ComprobanteDAOImpl.java</file>
-            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/vistas/RecibirComprobante.java</file>
-            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/controller/AlumnoDAOImpl.java</file>
-            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/vistas/Reportes.java</file>
-            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/vistas/ModificarComprobante.java</file>
+            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/vistas/Usuarios.java</file>
+            <file>file:/C:/Users/Yair/Documents/NetBeansProjects/SistemaConalep1/src/controller/UsuarioDAOImpl.java</file>
         </group>
     </open-files>
 </project-private>

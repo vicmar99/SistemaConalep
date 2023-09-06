@@ -306,8 +306,8 @@ public class Comprobantes extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEliminarComprobante;
-    private javax.swing.JButton btnModificarComprobante;
+    public static javax.swing.JButton btnEliminarComprobante;
+    public static javax.swing.JButton btnModificarComprobante;
     private javax.swing.JButton btnVerComprobante;
     public static javax.swing.JLabel etiAlumno;
     private javax.swing.JLabel jLabel1;

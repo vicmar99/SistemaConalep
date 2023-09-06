@@ -19,7 +19,7 @@ import controller.UsuarioDAOImpl;
  */
 public class Usuarios extends javax.swing.JPanel {
 
-    private String idUsuario = "";
+    private int idUsuario = -1;
     /**
      * Creates new form Usaurios
      */
@@ -329,7 +329,7 @@ public class Usuarios extends javax.swing.JPanel {
         }
 
         Usuario usuario = new Usuario();
-        usuario.setIdUsuario(Integer.parseInt(idUsuario));
+        usuario.setIdUsuario(idUsuario);
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
         usuario.setUsuario(nusuario);
@@ -339,8 +339,8 @@ public class Usuarios extends javax.swing.JPanel {
 
         try {
             UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
-            Usuario usuarioBuscado = usuarioDAO.traerUnUsuario(idUsuario);
-            if (usuarioBuscado.getIdUsuario() == -1) {
+            Usuario usuarioBuscado = usuarioDAO.traerUnUsuario(String.valueOf(idUsuario));
+            if (usuarioBuscado.getIdUsuario() == 0) {
                 usuarioDAO.registrar(usuario);
                 JOptionPane.showMessageDialog(null, "Operación exitosa", "AVISO",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -361,7 +361,7 @@ public class Usuarios extends javax.swing.JPanel {
         txtUsuarioUsuario.setText("");
         txtClaveUsuario.setText("");
         deshabilitarPanelNuevoUsuario();
-        idUsuario = "";
+        idUsuario = -1;
     }//GEN-LAST:event_btnAceptarActModUsuarioActionPerformed
 
     private void btnNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioActionPerformed
@@ -379,11 +379,12 @@ public class Usuarios extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Debe seleccionar por lo menos una fila para realizar la operación", "AVISO", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        idUsuario = String.valueOf(tablaUsuarios.getValueAt(fila, 0));
+        String idUsuarioM = String.valueOf(tablaUsuarios.getValueAt(fila, 0));
+        idUsuario = Integer.parseInt(idUsuarioM);
         UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
 
         try {
-            Usuario usuario = usuarioDAO.traerUnUsuario(idUsuario);
+            Usuario usuario = usuarioDAO.traerUnUsuario(idUsuarioM);
             txtNombreUsuario.setText(usuario.getNombre());
             txtApellidos.setText(usuario.getApellidos());
             txtUsuarioUsuario.setText(usuario.getUsuario());

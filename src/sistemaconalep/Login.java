@@ -64,6 +64,8 @@ public class Login extends javax.swing.JFrame {
                     d.btnAlumnos.setVisible(false);
                     d.btnPeriodo.setVisible(false);
                     d.btnUsuarios.setVisible(false);
+                    Comprobantes.btnEliminarComprobante.setVisible(false);
+                    Comprobantes.btnModificarComprobante.setVisible(false);
                 }
 
             } else {

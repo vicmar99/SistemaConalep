@@ -4,7 +4,7 @@
  */
 package vistas;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
